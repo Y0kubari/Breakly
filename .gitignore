@@ -1,0 +1,28 @@
+# Local build outputs
+/out/
+/out-*/
+/build/
+/build-*/
+/dist/
+/dist-*/
+/.vs/
+/.idea/
+/.vscode/
+CMakeUserPresets.json
+
+# Desktop checks, screenshots, measurements and isolated user profiles
+/checks/
+/measurements/
+/data/
+/.impeccable/config.local.json
+*.user
+*.suo
+*.tmp
+*.log
+
+# Local credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key

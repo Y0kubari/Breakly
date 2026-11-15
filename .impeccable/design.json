@@ -1,0 +1,447 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-15T12:37:52.580Z",
+  "title": "Design System: Breakly",
+  "extensions": {
+    "colorMeta": {
+      "surface-light": {
+        "role": "neutral",
+        "displayName": "Светлая поверхность"
+      },
+      "surface-dark": {
+        "role": "neutral",
+        "displayName": "Темная поверхность"
+      },
+      "text-light": {
+        "role": "neutral",
+        "displayName": "Текст светлой темы"
+      },
+      "text-dark": {
+        "role": "neutral",
+        "displayName": "Текст темной темы"
+      },
+      "muted-light": {
+        "role": "neutral",
+        "displayName": "Приглушенный текст светлой темы"
+      },
+      "muted-dark": {
+        "role": "neutral",
+        "displayName": "Приглушенный текст темной темы"
+      },
+      "button-light": {
+        "role": "neutral",
+        "displayName": "Светлая кнопка"
+      },
+      "button-dark": {
+        "role": "neutral",
+        "displayName": "Темная кнопка"
+      },
+      "button-pressed-light": {
+        "role": "neutral",
+        "displayName": "Нажатая светлая кнопка"
+      },
+      "button-pressed-dark": {
+        "role": "neutral",
+        "displayName": "Нажатая темная кнопка"
+      },
+      "border-light": {
+        "role": "neutral",
+        "displayName": "Контур светлой кнопки"
+      },
+      "border-dark": {
+        "role": "neutral",
+        "displayName": "Контур темной кнопки"
+      },
+      "icon-disc": {
+        "role": "neutral",
+        "displayName": "Диск значка"
+      },
+      "icon-bars": {
+        "role": "neutral",
+        "displayName": "Полосы паузы на значке"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Таймер обзора",
+        "purpose": "Крупное время до перерыва или до завершения отдыха на странице обзора"
+      },
+      "title": {
+        "displayName": "Заголовок",
+        "purpose": "Заголовки страниц, напоминания и таймер активного отдыха внутри напоминания"
+      },
+      "body": {
+        "displayName": "Основной текст",
+        "purpose": "Нативные подписи, кнопки, поля, флажки и статистика"
+      },
+      "brand": {
+        "displayName": "Надпись Breakly",
+        "purpose": "DirectWrite-текст в верхней полосе главного окна"
+      }
+    },
+    "shadows": [],
+    "motion": [],
+    "breakpoints": [],
+    "native": {
+      "platform": "Windows 11 x64",
+      "stack": [
+        "C++20",
+        "Win32",
+        "GDI",
+        "Direct2D",
+        "DirectWrite",
+        "DWM"
+      ],
+      "sourceOfTruth": [
+        "src/ui.cpp",
+        "src/ui.h",
+        "src/platform.cpp",
+        "PRODUCT.md"
+      ],
+      "units": {
+        "logical": "DIP при 96 DPI",
+        "scaling": "View::px(value) = MulDiv(value,dpi_,96)",
+        "fontSizes": "GDI: отрицательный lfHeight=-px(size); DirectWrite: размер в DIP",
+        "colorEncoding": "HEX в frontmatter передает RGB-каналы исходного COLORREF; не копировать HEX как числовое значение COLORREF",
+        "borderException": "GDI CreatePen с шириной 1 использует физический пиксель"
+      },
+      "rendererPreview": {
+        "kind": "native",
+        "htmlCssApplicable": false,
+        "explanation": "Реальные Win32/DWM-контролы описаны в extensions.native.components. HTML/CSS-примеры не создаются: shadow DOM не воспроизводит их системные состояния",
+        "tonalRamps": "В коде нет тональных шкал; синтетические значения не добавлены"
+      },
+      "dynamicColors": {
+        "accent": {
+          "source": "DwmGetColorizationColor",
+          "conversion": "RGB((color>>16)&255,(color>>8)&255,color&255)",
+          "lightAdjustment": "При r+g+b>540: r=r*2/3, g=g*2/3, b=b*2/3",
+          "darkAdjustment": "При r+g+b<250: r=(r+160)/2, g=(g+190)/2, b=(b+210)/2",
+          "arithmetic": "Целочисленная, как в accentColor(bool dark)",
+          "uses": [
+            "Индикатор выбранного раздела",
+            "Заполнение линии прогресса"
+          ],
+          "fixedValue": false
+        },
+        "highContrast": {
+          "source": "SystemParametersInfoW(SPI_GETHIGHCONTRAST)",
+          "mappings": {
+            "bg_": "GetSysColor(COLOR_WINDOW)",
+            "fg_": "GetSysColor(COLOR_WINDOWTEXT)",
+            "muted_": "GetSysColor(COLOR_WINDOWTEXT)",
+            "accent_": "GetSysColor(COLOR_HIGHLIGHT)",
+            "buttonFill": "GetSysColor(COLOR_BTNFACE)"
+          },
+          "limitation": "Контур owner-drawn-кнопок остается фиксированным цветом темы; реальная визуальная проверка высокого контраста еще не выполнена"
+        }
+      },
+      "fontSelection": {
+        "controls": {
+          "source": "EnumFontFamiliesExW → CreateFontIndirectW",
+          "preferred": "typography.body.fontFamily: первый вариант",
+          "fallback": "typography.body.fontFamily: второй вариант",
+          "quality": "CLEARTYPE_QUALITY"
+        },
+        "brand": {
+          "source": "IDWriteFactory::CreateTextFormat",
+          "family": "{typography.brand}",
+          "locale": "ru-RU",
+          "limitation": "В коде нет отдельной проверки наличия Variable Text и явного резервного выбора для надписи"
+        }
+      },
+      "windowDecoration": {
+        "corners": {
+          "source": "DwmSetWindowAttribute(DWMWA_WINDOW_CORNER_PREFERENCE)",
+          "value": "DWMWCP_ROUND",
+          "minimumBuild": 22000,
+          "numericRadius": "Системный, в приложении не задан"
+        },
+        "mica": {
+          "source": "DwmSetWindowAttribute(DWMWA_SYSTEMBACKDROP_TYPE)",
+          "value": "DWMSBT_MAINWINDOW",
+          "minimumBuild": 22621,
+          "conditions": [
+            "Главное окно",
+            "Включены эффекты приложения",
+            "Выключен высокий контраст",
+            "Включена прозрачность Windows"
+          ],
+          "area": "Верхние 64 DIP через DwmExtendFrameIntoClientArea; область GDI-контролов непрозрачна",
+          "fallback": "DWMSBT_NONE и сплошной фон темы"
+        },
+        "reminder": {
+          "mica": false,
+          "opaque": true
+        },
+        "transitions": {
+          "source": "DWMWA_TRANSITIONS_FORCEDISABLED",
+          "disableWhen": [
+            "Эффекты приложения выключены",
+            "SPI_GETCLIENTAREAANIMATION сообщает об отключенной анимации",
+            "Высокий контраст включен"
+          ]
+        },
+        "customShadows": false,
+        "customAnimationTimelines": false
+      },
+      "layout": {
+        "main": {
+          "initialOuterSize": "920 × 760 DIP",
+          "minimumOuterSize": "480 × 360 DIP",
+          "logicalContentWidth": "904 DIP",
+          "position": "По центру рабочей области"
+        },
+        "reminder": {
+          "initialOuterSize": "484 × 342 DIP",
+          "workAreaInset": "{spacing.monitor-inset}",
+          "position": "Правый нижний угол рабочей области выбранного монитора"
+        },
+        "viewportConstraint": "Начальный внешний размер ограничен рабочей областью с запасом 24 DIP",
+        "scrolling": "Нативные WS_VSCROLL и WS_HSCROLL; фиксированная разметка без изменения колонок",
+        "focusVisibility": "WM_SETFOCUS дочернего HWND → WM_APP+44 → прокрутка с запасом {spacing.focus-scroll-margin}",
+        "dpiChange": "WM_DPICHANGED применяет рекомендованный прямоугольник и build(true)",
+        "preservedDraft": "build(true) сохраняет текст, выбор списков, флажки и прокрутку; возвращает фокус, если окно было активным"
+      },
+      "components": [
+        {
+          "name": "Кнопка действия",
+          "kind": "button",
+          "refersTo": [
+            "button-light",
+            "button-dark",
+            "button-light-pressed",
+            "button-dark-pressed",
+            "button-light-disabled",
+            "button-dark-disabled"
+          ],
+          "source": "src/ui.cpp: View::button, WM_DRAWITEM",
+          "windowClass": "BUTTON",
+          "styles": [
+            "WS_TABSTOP",
+            "BS_PUSHBUTTON",
+            "BS_OWNERDRAW"
+          ],
+          "states": {
+            "normal": "Заливка, текст и размер заданы соответствующим вариантом frontmatter",
+            "pressed": "ODS_SELECTED выбирает нажатую заливку",
+            "disabled": "ODS_DISABLED выбирает приглушенный текст",
+            "focus": "DrawFocusRect; отступ {spacing.focus-inset}",
+            "hover": "Отдельного оформления нет"
+          },
+          "border": {
+            "width": "1 physical pixel",
+            "source": "CreatePen(PS_SOLID,1,...)",
+            "color": {
+              "light": "{colors.border-light}",
+              "dark": "{colors.border-dark}"
+            }
+          },
+          "shape": {
+            "source": "RoundRect(...,px(8),px(8))",
+            "interpretation": "Аргументы скругления задают диаметры эллипса; радиус {rounded.button}"
+          }
+        },
+        {
+          "name": "Кнопка навигации",
+          "kind": "nav",
+          "refersTo": [
+            "nav-light",
+            "nav-dark"
+          ],
+          "source": "src/ui.cpp: View::build, WM_DRAWITEM",
+          "windowClass": "BUTTON",
+          "states": {
+            "normal": "Фон и контур совпадают с поверхностью",
+            "selected": "Индикатор снизу использует native.dynamicColors.accent, высоту 3 DIP и боковые отступы {spacing.nav-indicator-inset}",
+            "focus": "DrawFocusRect отображается независимо от выбранного раздела"
+          },
+          "interaction": "BN_CLICKED меняет страницу, перестраивает контролы и возвращает фокус выбранной кнопке"
+        },
+        {
+          "name": "Число или время",
+          "kind": "input",
+          "refersTo": [
+            "edit-light",
+            "edit-dark"
+          ],
+          "source": "src/ui.cpp: View::field, View::timeField, View::control",
+          "windowClass": "EDIT",
+          "styles": [
+            "WS_EX_CLIENTEDGE",
+            "WS_TABSTOP",
+            "ES_AUTOHSCROLL"
+          ],
+          "states": {
+            "focus": "Системное оформление и поведение EDIT",
+            "error": "Системное MessageBoxW, без собственного токена рамки ошибки"
+          },
+          "limits": {
+            "numericCharacters": 6,
+            "timeCharacters": 5,
+            "timeFormat": "ЧЧ:ММ"
+          },
+          "interaction": "При перестроении с preserve=true сохраняются текст, положение прокрутки и фокус активного окна"
+        },
+        {
+          "name": "Выбор из списка",
+          "kind": "input",
+          "refersTo": [
+            "combo-light",
+            "combo-dark"
+          ],
+          "source": "src/ui.cpp: View::combo, WM_DRAWITEM, WM_MEASUREITEM",
+          "windowClass": "COMBOBOX",
+          "styles": [
+            "WS_TABSTOP",
+            "CBS_DROPDOWNLIST",
+            "CBS_OWNERDRAWFIXED",
+            "CBS_HASSTRINGS",
+            "WS_VSCROLL"
+          ],
+          "geometry": {
+            "itemHeight": "28 DIP",
+            "creationHeightIncludingDropdown": "250 DIP",
+            "textLeftInset": "{spacing.combo-text-inset}"
+          },
+          "states": {
+            "normal": "Содержимое owner-drawn-строки использует цвета темы",
+            "focus": "ODS_FOCUS вызывает DrawFocusRect",
+            "selected": "Отдельная заливка ODS_SELECTED не задана; обрамление и стрелка системные"
+          }
+        },
+        {
+          "name": "Флажок",
+          "kind": "custom",
+          "source": "src/ui.cpp: View::check, WM_NOTIFY/NM_CUSTOMDRAW",
+          "windowClass": "BUTTON",
+          "styles": [
+            "WS_TABSTOP",
+            "BS_AUTOCHECKBOX"
+          ],
+          "geometry": {
+            "glyph": "18 × 18 DIP",
+            "rowHeight": "30 DIP",
+            "textLeftOffset": "{spacing.checkbox-text-offset}"
+          },
+          "states": {
+            "unchecked": "DrawFrameControl с DFCS_BUTTONCHECK | DFCS_FLAT",
+            "checked": "Добавляется DFCS_CHECKED",
+            "disabled": "Добавляется DFCS_INACTIVE, текст использует muted темы",
+            "focus": "DrawFocusRect вокруг области текста"
+          }
+        },
+        {
+          "name": "Текстовый таймер",
+          "kind": "custom",
+          "source": "src/ui.cpp: View::build, View::refresh",
+          "windowClass": "STATIC",
+          "typography": {
+            "overview": "{typography.display}",
+            "reminder": "{typography.title}"
+          },
+          "states": {
+            "countdown": "Текст формата ММ:СС",
+              "complete": "Готово. Как прошёл отдых?"
+          },
+          "interaction": "SetWindowTextW вызывается только при изменении строки"
+        },
+        {
+          "name": "Линия прогресса",
+          "kind": "custom",
+          "refersTo": [
+            "progress"
+          ],
+          "source": "src/ui.cpp: View::paint",
+          "renderer": "Direct2D FillRoundedRectangle",
+          "geometry": {
+            "origin": "(32,360) DIP"
+          },
+          "states": {
+            "track": "muted текущей темы с альфа-каналом 0.2",
+            "fill": "native.dynamicColors.accent",
+            "value": "clamp(1 - remaining / interval, 0, 1)"
+          }
+        },
+        {
+          "name": "Окно напоминания",
+          "kind": "custom",
+          "source": "src/ui.cpp: View::View, View::build, View::activate; src/platform.cpp: decorate",
+          "windowClass": "Breakly.Reminder",
+          "styles": [
+            "WS_POPUP",
+            "WS_CAPTION",
+            "WS_SYSMENU",
+            "WS_CLIPCHILDREN",
+            "WS_EX_TOOLWINDOW",
+            "WS_EX_TOPMOST",
+            "WS_EX_NOACTIVATE"
+          ],
+          "states": {
+            "automatic": "Непрозрачное окно без перехвата фокуса при показе",
+            "explicit": "View::activate снимает WS_EX_NOACTIVATE, активирует окно и переводит фокус на первое действие",
+            "activeBreak": "Показываются таймер и две кнопки; подтверждение недоступно до завершения отсчета"
+          },
+          "material": "DWMSBT_NONE"
+        }
+      ],
+      "lifecycle": {
+        "renderTarget": "D2D1_RENDER_TARGET_TYPE_SOFTWARE",
+        "drawing": "WM_PAINT по событиям, без постоянного render loop",
+        "visibleWindowRefresh": "Таймер 1000 мс; KillTimer при скрытии и сворачивании",
+        "updates": "SetWindowTextW только для изменившихся строк",
+        "closedWindow": "Окно уничтожается; освобождаются render target и ресурсы View"
+      },
+      "evidence": {
+        "codeFirst": true,
+        "generatedImages": false,
+        "webDetectorApplicable": false,
+        "screenshots": [
+          "checks/desktop-20261115-153012/main-dark.png",
+          "checks/desktop-20261115-153012/notification-dark.png",
+          "checks/desktop-20261115-153012/settings-dark.png",
+          "checks/desktop-20261115-153012/settings-light.png",
+          "checks/desktop-20261115-153012/short-window-focus.png"
+        ],
+        "desktopCheckLog": "checks/desktop-20261115-153012/passed.txt",
+        "reviewedScope": "Повторное независимое ревью: ship в пределах четырех исправлений клавиатуры, фокуса, видимости элемента при прокрутке и сохранения черновика",
+        "remainingRealDeviceChecks": [
+          "Не беспокоить (DND)",
+          "Сон и возобновление",
+          "Несколько мониторов",
+          "Разные DPI",
+          "Высокий контраст"
+        ]
+      }
+    }
+  },
+  "components": [],
+  "narrative": {
+    "northStar": "Windows 11 Fluent",
+    "overview": "Breakly следует закрепленному пользователем стилю Windows 11: системная светлая или темная тема, системный акцент, семейство Segoe UI и обычные оконные действия. Интерфейс помогает быстро увидеть время до перерыва, изменить настройки и вернуться к работе\n\nВизуальная система построена на нативных Win32-контролах с GDI, небольшой отрисовке Direct2D и DirectWrite и оформлении DWM. Сдержанность, читаемость и привычное управление важнее декоративных эффектов; собственные изображения и растровые иллюстрации не используются",
+    "keyCharacteristics": [
+      "Две нейтральные темы и динамический акцент Windows",
+      "Четкая иерархия текста с крупным таймером",
+      "Нативные элементы управления и видимый клавиатурный фокус",
+      "Mica только в верхней полосе главного окна при поддержке системой",
+      "Непрозрачное напоминание, которое при автоматическом показе сохраняет фокус текущей работы",
+      "Отрисовка по событиям и секундное обновление только видимого окна"
+    ],
+    "rules": [],
+    "dos": [
+      "Do Сохранять системную тему, акцент Windows и проверяемый GDI-резерв Segoe UI",
+      "Do Измерять нативную разметку в DIP и переводить ее в пиксели с учетом DPI окна",
+      "Do Оставлять Mica только в поддерживаемой верхней полосе главного окна",
+      "Do Сохранять нативные HWND-контролы, видимый фокус и прокрутку к элементу управления",
+      "Do Проверять светлую и темную темы, непрозрачный запасной вариант и ограничения доступности на реальном Windows",
+      "Do Сохранять отрисовку по событиям и освобождение ресурсов закрытых окон"
+    ],
+    "donts": [
+      "Don't Фиксировать цвет акцента по снимку или переносить цвет значка в интерфейс вместо акцента Windows",
+      "Don't Распространять прозрачность или Mica на область GDI-контролов и окно напоминания",
+      "Don't Подменять Win32-состояния выдуманными CSS-токенами, веб-компонентами или hover-анимациями",
+      "Don't Считать диаметр эллипса RoundRect радиусом кнопки",
+      "Don't Объявлять реальные DND, сон, несколько мониторов, высокий контраст и разные DPI полностью проверенными по автоматизированному снимку"
+    ]
+  }
+}

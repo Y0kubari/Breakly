@@ -1,0 +1,22 @@
+#include <windows.h>
+101 ICON "Breakly.ico"
+1 RT_MANIFEST "Breakly.manifest"
+1 VERSIONINFO
+FILEVERSION 0,1,0,0
+PRODUCTVERSION 0,1,0,0
+FILETYPE VFT_APP
+BEGIN
+ BLOCK "StringFileInfo"
+ BEGIN
+  BLOCK "040904B0"
+  BEGIN
+   VALUE "FileDescription", "Breakly\0"
+   VALUE "ProductName", "Breakly\0"
+   VALUE "FileVersion", "0.1.0\0"
+  END
+ END
+ BLOCK "VarFileInfo"
+ BEGIN
+  VALUE "Translation", 0x409, 1200
+ END
+END
